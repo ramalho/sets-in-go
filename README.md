@@ -4,6 +4,10 @@ Materials for a talk
 
 ## References
 
+### Talks
+
+* [Prática de Conjuntos](https://youtu.be/3MqEWOpBKpo)
+
 ### Previous studies
 
 * [set-practice](https://github.com/ramalho/set-practice): talk with Go and Python examples
