@@ -1,0 +1,16 @@
+
+
+
+Each(func(T) bool)
+Filter(func(T) bool) Set[T]
+Iter() <-chan T
+Iterator() *Iterator[T]
+Remove(i T)
+RemoveAll(i ...T)
+String() string
+
+ToSlice() []T
+MarshalJSON() ([]byte, error)
+UnmarshalJSON(b []byte) error
+MarshalBSONValue() (bsontype.Type, []byte, error)
+UnmarshalBSONValue(bt bsontype.Type, b []byte) error
