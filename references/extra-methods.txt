@@ -5,8 +5,6 @@ Each(func(T) bool)
 Filter(func(T) bool) Set[T]
 Iter() <-chan T
 Iterator() *Iterator[T]
-Remove(i T)
-RemoveAll(i ...T)
 String() string
 
 ToSlice() []T

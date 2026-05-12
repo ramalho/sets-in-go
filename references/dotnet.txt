@@ -1,0 +1,19 @@
+# .net 10
+# https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.iset-1?view=net-10.0
+
+Add(T)
+Clear()
+Contains(T)
+CopyTo(T[], Int32)
+ExceptWith(IEnumerable<T>)
+GetEnumerator()
+IntersectWith(IEnumerable<T>)
+IsProperSubsetOf(IEnumerable<T>)
+IsProperSupersetOf(IEnumerable<T>)
+IsSubsetOf(IEnumerable<T>)
+IsSupersetOf(IEnumerable<T>)
+Overlaps(IEnumerable<T>)
+Remove(T)
+SetEquals(IEnumerable<T>)
+SymmetricExceptWith(IEnumerable<T>)
+UnionWith(IEnumerable<T>) 
