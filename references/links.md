@@ -9,3 +9,5 @@
 https://pkg.go.dev/github.com/downflux/go-sparseset@v0.0.0-20230226072905-e55eabd2ff19/sparseset
 
 https://pkg.go.dev/github.com/downflux/go-sparseset/sparseset
+
+https://groups.google.com/g/gonum-dev/c/twUcG1rEMIU?pli=1
