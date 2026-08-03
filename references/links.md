@@ -6,3 +6,5 @@
 
 * [Sparse Sets in Go](https://ideahitme.github.io/posts/sparse-set-in-go/)
 
+https://pkg.go.dev/github.com/downflux/go-sparseset@v0.0.0-20230226072905-e55eabd2ff19/sparseset
+
