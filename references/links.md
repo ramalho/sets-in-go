@@ -11,3 +11,8 @@ https://pkg.go.dev/github.com/downflux/go-sparseset@v0.0.0-20230226072905-e55eab
 https://pkg.go.dev/github.com/downflux/go-sparseset/sparseset
 
 https://groups.google.com/g/gonum-dev/c/twUcG1rEMIU?pli=1
+
+https://medium.com/@val_deleplace/7-ways-to-implement-a-bit-set-in-go-91650229b386
+
+
+
