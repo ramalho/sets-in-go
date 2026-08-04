@@ -1,6 +1,27 @@
-# Modern Sets in Go
+# Sets in Modern Go
 
-Materials for a talk
+Exploring the design space for set types in modern Go.
+
+Materials for a talk.
+
+## Title and abstract
+
+As approved by the organizers of GopherCon UK 2026
+
+### Sets in Modern Go
+
+Luciano Ramalho, master explainer
+
+Set theory is closely related to Boolean logic and databases.
+In practice, set operations can dramatically simplify code,
+replacing complex nested loops and ifs with declarative expressions
+that are easier to read and may offer better performance.
+That's why most popular, modern languages provide sets in
+their standard libraries, but not yet Go.
+
+In this talk I show how set operations simplify common programming
+tasks, and how to implement a generic set type in modern Go.
+
 
 ## References
 
@@ -18,7 +39,7 @@ Materials for a talk
 
 ### Talks
 
-* [Prática de Conjuntos](https://youtu.be/3MqEWOpBKpo)
+* [Prática de Conjuntos](https://youtu.be/3MqEWOpBKpo) (presented at GopherCon Brasil 2019; in Portuguese)
 
 ### Previous studies
 

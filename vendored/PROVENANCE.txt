@@ -1,0 +1,8 @@
+Extracted by refresh.sh on 2026-08-03 15:16:03 UTC
+
+  container/set     https://go-review.googlesource.com/c/go/+/745441     patchset 13
+  container/mapset  https://go-review.googlesource.com/c/go/+/724420  patchset 27
+  internal/fmtsort  /usr/local/go/src/internal/fmtsort/sort.go (go1.26.1)
+
+Both CLs were unmerged proposals at the time of extraction.
+Only the import paths were changed; the code is otherwise verbatim.

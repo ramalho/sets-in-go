@@ -18,6 +18,7 @@ is written as `Example` tests, so `go test` verifies every output.
 | `union_test.go` | `A ∪ B`, destructive and cloned | `maps.Copy`, `maps.Clone` |
 | `algebra_test.go` | `∩`, `∖`, `△` — the algebra the stdlib omits | `maps.DeleteFunc`, `maps.Clone`, `slices.Sorted` |
 | `iterators_test.go` | Go 1.23 composable pipelines | `maps.Keys`, `slices.Sorted`, `slices.Collect`, `iter.Seq` |
+| `proposed_test.go` | the same operations under the **proposed** `container/set` | `set.Set`, `mapset` on legacy `map[K]bool` |
 
 ## Running
 
@@ -27,6 +28,23 @@ go test ./...        # verify every example's output
 go test -v ./...     # see each example run
 go doc .             # read the package overview
 ```
+
+## The proposed `container/set`
+
+`proposed_test.go` reruns the themes above against Alan Donovan's proposed
+`container/set` and `container/mapset` packages, so each handwritten idiom sits
+next to the one-liner that would replace it.
+
+**Neither package is in Go.** Both are open CLs, extracted into `../vendored`
+and pulled in with a `replace` directive so the examples actually run:
+
+```
+require github.com/ramalho/sets-in-go/vendored v0.0.0
+replace github.com/ramalho/sets-in-go/vendored => ../vendored
+```
+
+See `../vendored/README.md` for provenance, how to re-extract at a newer
+patchset, and the rough edges in the current revisions.
 
 ## Notes
 
