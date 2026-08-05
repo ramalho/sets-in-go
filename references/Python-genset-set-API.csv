@@ -1,0 +1,49 @@
+Math symbol	Python set operators	Python
+set methods 	.net interface
+ISet<T> 	ramalho/
+genset
+				
+S ∪ Z 	s | z	s.union(it, …)		s.Union(z)
+	s =| z	s.update(it, …)	s.UnionWith(IEnumerable<T>)	s.UnionUpdate(z)
+				
+				s.AddAll(e…)
+		s.add(e) 	s.Add(T)	s.Add(e)
+				
+S ∩ Z 	s & z 	s.intersection(it, …) 	s.IntersectWith(IEnumerable<T>)
+	s.Intersection(z)
+			s.Overlaps(IEnumerable<T>)	
+	s &= z 	s.intersection_update(it, …) 		s.IntersectionUpdate(z)
+				
+S \ Z 	s - z 	s.difference(it, …) 		s.Difference(z)
+	s -= z 	s.difference_update(it, …) 	s.ExceptWith(IEnumerable<T>)	s.DifferenceUpdate(z)
+				s.RemoveAll(e…)
+S ∆ Z 	s ^ z 	s.symmetric_difference(it) 	s.SymmetricExceptWith(IEnumerable<T>)	s.SymmetricDifference(z)
+	s ^= z 	s.symmetric_difference_update(it, …) 		s.SymmetricDifferenceUpdate(z)
+				
+e ∈ S 	e in s 	s.‗‗contains‗‗(e) 	s.Contains(T)	s.Contains(e)
+				s.ContainsAll(e…)
+				
+				
+				
+S = Z	s == z	s.‗‗eq‗‗(z) 	s.SetEquals(IEnumerable<T>)	s.Equal(z)
+S ⊆ Z 	s <= z 	s.issubset(it) 	s.IsSubsetOf(IEnumerable<T>)	s.SubsetOf(z)
+S ⊂ Z 	s < z 	s.‗‗lt‗‗(z) 	s.IsProperSubsetOf(IEnumerable<T>)	
+S ⊇ Z 	s >= z 	s.issuperset(it) 	s.IsSupersetOf(IEnumerable<T>)	s.SupersetOf(z)
+S ⊃ Z 	s > z 	s.‗‗gt‗‗(z) 	s.IsProperSupersetOf(IEnumerable<T>)	
+				
+		s.isdisjoint(z) 		
+S × Z				
+				
+				
+	len(s)	s.__len__()	s.Count()	s.Len()
+	not s	s.__bool__()		
+		s.‗‗iter‗‗() 	s.GetEnumerator()	
+				s.ToSlice()
+		s.clear() 	s.Clear()	s.Clear()
+		s.copy() 	s.CopyTo(T[], Int32)	s.Copy()
+				
+		s.discard(e) 		s.Remove(e)
+		s.pop() 		s.Pop()
+				
+		s.remove(e) 	s.Remove(T)	
+			s.ExceptWith(IEnumerable<T>)	
