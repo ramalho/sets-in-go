@@ -1,0 +1,13 @@
+go 1.27
+
+// ./setgm uses Go 1.27 generic methods. Pin the release candidate until
+// 1.27.0 ships; the go command finds it as the go1.27rc2 binary in PATH.
+toolchain go1.27rc2
+
+use (
+	./examples
+	./genset
+	./setgm
+	./tools
+	./vendored
+)

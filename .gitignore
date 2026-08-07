@@ -26,8 +26,10 @@ profile.cov
 # vendor/
 
 # Go workspace file
-go.work
-go.work.sum
+### These should be ignored for production work,
+### but for a didactic demo, they are committed.
+### go.work
+### go.work.sum
 
 # env file
 .env

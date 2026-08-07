@@ -19,6 +19,7 @@ is written as `Example` tests, so `go test` verifies every output.
 | `algebra_test.go` | `∩`, `∖`, `△` — the algebra the stdlib omits | `maps.DeleteFunc`, `maps.Clone`, `slices.Sorted` |
 | `iterators_test.go` | Go 1.23 composable pipelines | `maps.Keys`, `slices.Sorted`, `slices.Collect`, `iter.Seq` |
 | `proposed_test.go` | the same operations under the **proposed** `container/set` | `set.Set`, `mapset` on legacy `map[K]bool` |
+| `superset_test.go` | `A ⊇ B`, `A ⊂ B` — built from the proposal's `ContainsAll` | `set.ContainsAll`, `mapset.ContainsAll` |
 
 ## Running
 

@@ -4,6 +4,8 @@
 
 * [proposal: container/...: generic collection types](https://github.com/golang/go/issues/80590)
 
+* [comment: set.Set interface API recommended by the Collections working group](https://github.com/golang/go/issues/69230#issuecomment-5095993889)
+
 * [Go proposal: Hashers](https://antonz.org/accepted/maphash-hasher/)
 
 * [sparse intsets](https://pkg.go.dev/golang.org/x/tools/container/intsets)
