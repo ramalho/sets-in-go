@@ -31,8 +31,7 @@ type — nobody writes that on purpose, they just return `mapset.Of(elems...)`.
 And the doc comment says "the elements of the sequence" for a function taking
 variadic elements; that wording belongs to `Collect`, directly above it.
 
-Both read as copy-paste residue. That matters for how you present it: a slip in
-a review still in progress, not a position anyone will defend.
+Both look like copy-paste residue. This is code under review.
 
 ## The genuine case for returning `map[E]struct{}`
 
@@ -57,8 +56,8 @@ cannot use set.Collect(b.All()) (value of map type set.Set[string])
 	as MySet value in variable declaration
 ```
 
-So returning the unnamed type genuinely does let the result flow into anyone's
-named map type without a conversion, and returning `Set[E]` genuinely does not.
+So returning the unnamed type does let the result flow into anyone's
+named map type without a conversion, and returning `Set[E]` does not.
 It is the same reason `slices.Collect` returns a plain `[]E`.
 
 ## Why the case does not hold up here
@@ -142,7 +141,7 @@ calling `mapset.Of` instead. The benefit is a constructor consistent with
 `Collect`, inferring the intended type under `:=`, and producing values you can
 actually call methods on.
 
-## For the talk
+## Note for the talk
 
 This is a compact illustration of a Go-specific tension that has no clean
 resolution: **defined types trade assignability for a method set.** The same
