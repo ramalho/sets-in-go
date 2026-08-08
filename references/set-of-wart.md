@@ -1,9 +1,9 @@
 # `set.Of` returns the wrong type
 
 Notes on a rough edge in [CL 745441](https://go-review.googlesource.com/c/go/+/745441),
-Alan Donovan's proposed `container/set`, as of patchset 13. The code discussed
-here is vendored in `../vendored`; every compiler claim below was checked
-against it with Go 1.26.
+Alan Donovan's proposed `container/set`, as of patchset 13 — still the current
+patchset on 2026-08-08. The code discussed here is vendored in `../vendored`;
+every compiler claim below was checked against it with Go 1.27rc2.
 
 The constructor is declared to return `map[E]struct{}` rather than `Set[E]`, so
 its result carries none of the type's 22 methods. It is a small slip with
