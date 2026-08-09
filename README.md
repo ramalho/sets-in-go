@@ -31,7 +31,7 @@ tasks, and how to implement a generic set type in modern Go.
 
 * [Writing generic collection types in Go](https://www.dolthub.com/blog/2024-07-01-golang-generic-collections/): the missing documentation
 
-### Code
+### Packages
 
 * [golang-set](https://github.com/deckarep/golang-set/blob/main/README.md): the missing generic set collection for the Go language.
 
@@ -47,7 +47,9 @@ tasks, and how to implement a generic set type in modern Go.
 
 * [runeset](https://github.com/ramalho/runeset): simple set type for Unicode characters in Go (a.k.a. runes)
 
-* [strset](https://github.com/ramalho/strset): full-featured Go set type for `string` elements.
+* [runefinder](https://github.com/ramalho/runefinder): inverted index mapping words to set of runes
+
+* [strset](https://github.com/ramalho/strset): full-featured Go set type for `string` elements
 
 * [intset](https://github.com/ramalho/intset): set type for integer elements in Go, based on the `intset` example from Chapter 6 of
 [The Go Programming Language](https://www.gopl.io/), by Alan A. A. Donovan & Brian W. Kernighan.
