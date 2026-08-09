@@ -20,14 +20,25 @@ All of it hangs off the collections umbrella issue,
 
 ## Layout
 
+Each directory mirrors one directory of the Go source tree; the second column
+is the upstream path, rooted at the top of the `go` repo.
+
 ```
-set/        container/set.Set[E comparable]   — façade over mapset
-mapset/     container/mapset                  — free functions over map[K]V
-hash/       container/hash.{Map,Set}          — open hashing, custom equivalence
-container/  the conformance test that checks set.Set and *hash.Set
-            against the same abstract interfaces
-internal/   three shims: fmtsort, maps, iter
+set/        src/container/set/     Set[E comparable] — façade over mapset
+mapset/     src/container/mapset/  free functions over map[K]V
+hash/       src/container/hash/    Map and Set — open hashing, custom equivalence
+container/  src/container/         container_test.go alone: the conformance test
+                                   checking set.Set and *hash.Set against the
+                                   same abstract interfaces
+internal/   (mostly not upstream)  three shims: fmtsort, maps, iter
 ```
+
+`src/container/container_test.go` sits directly in the `container` directory,
+a sibling of `set/` and `hash/` rather than a member of either. It declares
+`package container_test` and has no non-test package to attach to: upstream it
+exists purely as a conformance harness across the sibling collection packages.
+Of the three shims, only `internal/fmtsort/` corresponds to a real upstream
+directory (`src/internal/fmtsort/`).
 
 ## Requirements
 
@@ -190,8 +201,9 @@ under review, not of the extraction.
   only those two are carried into `internal/iter`, so this does not affect
   anything here.
 
-- **`set` still has no tests of its own.** CL 745441 adds only `set.go`. What it
-  does bring is `container/container_test.go`, vendored here under `container/`:
+- **`set` still has no tests of its own.** CL 745441 adds only
+  `src/container/set/set.go`. What it does bring is
+  `src/container/container_test.go`, vendored here as `container/container_test.go`:
   it is mostly a *static* conformance check that `set.Set[int]` and
   `*hash.Set[int]` both satisfy the same F-bounded `_AbstractSet` interface, plus
   generic `Subset`/`Superset`/`Take` helpers defined over it. Its only runtime

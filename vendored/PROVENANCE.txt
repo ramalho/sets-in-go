@@ -1,11 +1,28 @@
-Extracted by refresh.sh on 2026-08-09 20:41:25 UTC
+Extracted by refresh.sh on 2026-08-09 21:14:41 UTC
 
-  container/set            https://go-review.googlesource.com/c/go/+/745441  patchset 13
-  container/mapset         https://go-review.googlesource.com/c/go/+/724420  patchset 27
-  container/hash (Map)     https://go-review.googlesource.com/c/go/+/612217  patchset 30
-  container/hash (Set)     https://go-review.googlesource.com/c/go/+/741160  patchset 21
-  container (conformance)  https://go-review.googlesource.com/c/go/+/741160  patchset 21
-  internal/fmtsort         https://go-review.googlesource.com/c/go/+/612217  patchset 30
+Paths under "upstream" are rooted at the top of the go repository.
+
+  here                         upstream                             CL / patchset
+  ---------------------------  -----------------------------------  -------------
+  set/set.go                   src/container/set/set.go             745441 ps 13
+  mapset/mapset.go             src/container/mapset/mapset.go       724420 ps 27
+  mapset/mapset_test.go        src/container/mapset/mapset_test.go  724420 ps 27
+  hash/map.go                  src/container/hash/map.go            612217 ps 30
+  hash/map_test.go             src/container/hash/map_test.go       612217 ps 30
+  hash/iter_test.go            src/container/hash/iter_test.go      612217 ps 30
+  hash/set.go                  src/container/hash/set.go            741160 ps 21
+  hash/set_test.go             src/container/hash/set_test.go       741160 ps 21
+  hash/example_test.go         src/container/hash/example_test.go   741160 ps 21
+  container/container_test.go  src/container/container_test.go      741160 ps 21
+  internal/fmtsort/sort.go     src/internal/fmtsort/sort.go         612217 ps 30
+
+  internal/maps/maps.go        not upstream: shim adding maps.Identical, CL 760800
+  internal/iter/iter.go        not upstream: shim adding Every/Some, CL 745440
+
+Note that src/container/container_test.go lives directly in src/container, a
+sibling of set/ and hash/ rather than a member of either package.
+
+Each CL number above is https://go-review.googlesource.com/c/go/+/<number>.
 
 All CLs were unmerged proposals at the time of extraction.
 Import paths were changed throughout; hash/map.go and hash/set.go also have

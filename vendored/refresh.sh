@@ -133,12 +133,29 @@ gofmt -w set/set.go mapset/mapset.go mapset/mapset_test.go hash/*.go container/c
 cat >PROVENANCE.txt <<EOF
 Extracted by refresh.sh on $(date -u '+%Y-%m-%d %H:%M:%S UTC')
 
-  container/set            $GERRIT/c/go/+/$SET_CL  patchset $SET_PS
-  container/mapset         $GERRIT/c/go/+/$MAPSET_CL  patchset $MAPSET_PS
-  container/hash (Map)     $GERRIT/c/go/+/$MAP_CL  patchset $MAP_PS
-  container/hash (Set)     $GERRIT/c/go/+/$HASH_CL  patchset $HASH_PS
-  container (conformance)  $GERRIT/c/go/+/$HASH_CL  patchset $HASH_PS
-  internal/fmtsort         $GERRIT/c/go/+/$MAP_CL  patchset $MAP_PS
+Paths under "upstream" are rooted at the top of the go repository.
+
+  here                         upstream                             CL / patchset
+  ---------------------------  -----------------------------------  -------------
+  set/set.go                   src/container/set/set.go             $SET_CL ps $SET_PS
+  mapset/mapset.go             src/container/mapset/mapset.go       $MAPSET_CL ps $MAPSET_PS
+  mapset/mapset_test.go        src/container/mapset/mapset_test.go  $MAPSET_CL ps $MAPSET_PS
+  hash/map.go                  src/container/hash/map.go            $MAP_CL ps $MAP_PS
+  hash/map_test.go             src/container/hash/map_test.go       $MAP_CL ps $MAP_PS
+  hash/iter_test.go            src/container/hash/iter_test.go      $MAP_CL ps $MAP_PS
+  hash/set.go                  src/container/hash/set.go            $HASH_CL ps $HASH_PS
+  hash/set_test.go             src/container/hash/set_test.go       $HASH_CL ps $HASH_PS
+  hash/example_test.go         src/container/hash/example_test.go   $HASH_CL ps $HASH_PS
+  container/container_test.go  src/container/container_test.go      $HASH_CL ps $HASH_PS
+  internal/fmtsort/sort.go     src/internal/fmtsort/sort.go         $MAP_CL ps $MAP_PS
+
+  internal/maps/maps.go        not upstream: shim adding maps.Identical, CL 760800
+  internal/iter/iter.go        not upstream: shim adding Every/Some, CL $ITER_CL
+
+Note that src/container/container_test.go lives directly in src/container, a
+sibling of set/ and hash/ rather than a member of either package.
+
+Each CL number above is $GERRIT/c/go/+/<number>.
 
 All CLs were unmerged proposals at the time of extraction.
 Import paths were changed throughout; hash/map.go and hash/set.go also have
