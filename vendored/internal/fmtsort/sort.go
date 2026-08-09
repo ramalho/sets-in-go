@@ -65,6 +65,11 @@ func Sort(mapValue reflect.Value) SortedMap {
 	return sorted
 }
 
+// Compare returns a three-valued comparison of a and b as defined by [Sort].
+func Compare(a, b any) int {
+	return compare(reflect.ValueOf(a), reflect.ValueOf(b))
+}
+
 // compare compares two values of the same type. It returns -1, 0, 1
 // according to whether a > b (1), a == b (0), or a < b (-1).
 // If the types differ, it returns -1.
