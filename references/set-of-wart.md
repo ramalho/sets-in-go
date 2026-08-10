@@ -144,10 +144,28 @@ actually call methods on.
 ## Note for the talk
 
 This is a compact illustration of a Go-specific tension that has no clean
-resolution: **defined types trade assignability for a method set.** The same
-question decides whether a library returns `[]byte` or `type Buffer []byte`, and
-Go's own standard library answers it both ways depending on whether methods are
-load-bearing.
+resolution: **defined types trade assignability for a method set.** The
+standard library answers the question both ways.
+
+Plain `[]byte`, no method set, when the value is inert data: `io.ReadAll`,
+`json.Marshal`, `(*bytes.Buffer).Bytes()`. Nothing to attach behavior to, so
+the unnamed type keeps the result assignable into anything.
+
+A named byte-slice type when the methods encode semantics a raw byte
+comparison would get wrong. `net.IP` is `type IP []byte`, and its `Equal`
+method is documented to treat a 4-byte IPv4 address and its 16-byte
+IPv4-in-IPv6 form as equal — `bytes.Equal` on the raw slices would say they
+differ, since the lengths don't even match. `String` similarly renders that
+same dual form and RFC 5952 zero-run compression correctly, which
+`fmt.Sprintf("%v", rawBytes)` cannot. `net.HardwareAddr` (`type HardwareAddr
+[]byte`) makes the same call for MAC addresses, with `String` formatting as
+`xx:xx:xx:xx:xx:xx`.
+
+The mirror is not exact: `[]byte` is itself unnamed, so `net.IP` is still
+freely assignable to and from plain `[]byte`. The case that actually matches
+`Set[E]`/`MySet` is assigning `net.IP` into a second named byte-slice type —
+say `type Payload []byte` — which does need an explicit `Payload(ip)`
+conversion, for the same reason `set.Collect`'s result needs `MySet(...)`.
 
 It is also live. The CL is open, so this may be fixed before the talk — check
 the current patchset, and re-extract with:
