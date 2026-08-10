@@ -22,32 +22,32 @@ Test files omitted.
 
 ```
 go/src/
+├── hash/
+│   └── maphash/
+│       └── maphash.go       =  Hasher interface, new in Go 1.27 (#70471)
+├── maps/
+│   └── maps.go              ★  added Identical (#78456), used by mapset
 ├── container/
+│   ├── set/
+│   │   └── set.go           ★✚ the new canonical set (#69230)
+│   ├── mapset/
+│   │   └── mapset.go        ★✚ helpers for map-based sets (#77052)
 │   ├── hash/
-│   │   ├── map.go           ✚  hash.Map, keyed by maphash.Hasher (#69559)
-│   │   └── set.go           ✚  hash.Set, same approach (#80584)
+│   │   ├── map.go           ★✚ hash.Map, uses maphash.Hasher (#69559)
+│   │   └── set.go           ★✚ hash.Set, same approach (#80584)
 │   ├── heap/
 │   │   ├── heap.go          =  existing, pre-generics
 │   │   └── v2/
-│   │       └── heap.go      ?  generic Heap replacing the callback API (#77397)
+│   │       └── heap.go      ?  generic, more ergonomic Heap (#77397)
 │   ├── list/
 │   │   └── list.go          =  existing
-│   ├── mapset/
-│   │   └── mapset.go        ★✚ helpers for legacy map-based sets (#77052)
 │   ├── ordered/
 │   │   └── ordered.go       ?  tree-based ordered.Map/Set (#60630)
-│   ├── ring/
-│   │   └── ring.go          =  existing
-│   └── set/
-│       └── set.go           ★✚ the canonical set, transparently map[T]struct{} (#69230)
-├── hash/
-│   └── maphash/
-│       └── maphash.go       =  Hasher, released in go1.27 (#70471)
-├── internal/
-│   └── fmtsort/
-│       └── sort.go          ★  used by mapset.String to sort keys the way fmt does
-└── maps/
-    └── maps.go              ★  gains Identical (#78456), used by mapset for aliasing shortcuts
+│   └── ring/
+│       └── ring.go          =  existing
+└── internal/
+    └── fmtsort/
+        └── sort.go          ★  used by mapset.String to sort keys
 ```
 
 ## Proposed layout of `go/src`
@@ -55,18 +55,18 @@ go/src/
 ```
 go/src/
 ├── container/
-│   ├── container_test.go                ✚  CL 761460 — unexported abstract
+│   ├── container_test.go                ★✚ CL 761460 — unexported abstract
 │   │                                       _AbstractCollection/_Set/_Map constraints
 │   │                                       + symmetry tests; also touched by
 │   │                                       CLs 745441, 612217, 741160
-│   ├── hash/                            ✚  hash.Map / hash.Set, keyed by
-│   │                                       maphash.Hasher (#69559, #80584)
-│   │   ├── example_test.go              ✚  CL 612217, CL 741160
-│   │   ├── iter_test.go                 ✚  CL 612217
-│   │   ├── map.go                       ✚  CL 612217
-│   │   ├── map_test.go                  ✚  CL 612217
-│   │   ├── set.go                       ✚  CL 741160
-│   │   └── set_test.go                  ✚  CL 741160
+│   ├── hash/                            ★✚ hash.Map / hash.Set, keyed by
+│   │   │                                   maphash.Hasher (#69559, #80584)
+│   │   ├── example_test.go              ★✚ CL 612217, CL 741160
+│   │   ├── iter_test.go                 ★✚ CL 612217
+│   │   ├── map.go                       ★✚ CL 612217
+│   │   ├── map_test.go                  ★✚ CL 612217
+│   │   ├── set.go                       ★✚ CL 741160
+│   │   └── set_test.go                  ★✚ CL 741160
 │   ├── heap/                            =  existing, pre-generics
 │   │   ├── example_intheap_test.go      =
 │   │   ├── example_pq_test.go           =
@@ -79,7 +79,7 @@ go/src/
 │   │   ├── list.go                      =
 │   │   └── list_test.go                 =
 │   ├── mapset/                          ✚  package-level helpers for legacy
-│   │                                       map[T]bool / map[T]struct{} sets (#77052)
+│   │   │                                   map[T]bool / map[T]struct{} sets (#77052)
 │   │   ├── mapset.go                    ★✚ CL 724420 ps 27
 │   │   └── mapset_test.go               ★✚ CL 724420 ps 27
 │   ├── ordered/                         ?  tree-based ordered.Map/Set
@@ -89,20 +89,17 @@ go/src/
 │   │   ├── example_test.go              =
 │   │   ├── ring.go                      =
 │   │   └── ring_test.go                 =
-│   └── set/                             ✚  the canonical set type, transparently
-│                                           map[T]struct{} (#69230)
+│   └── set/                             ★✚ the canonical set type (#69230)
 │       └── set.go                       ★✚ CL 745441 ps 13 — no test file; its only
 │                                           test line lives in container_test.go
 ├── hash/
 │   └── maphash/
-│       └── maphash.go                   =  Hasher — the custom hash / equivalence
-│                                           interface that container/hash builds on;
+│       └── maphash.go                   =  Hasher interface for container/hash types;
 │                                           #70471, CL 657296, released in go1.27
 ├── internal/
 │   └── fmtsort/
 │       └── sort.go                      ★  existing; used by mapset.String to sort
-│                                           keys the way fmt does. CL 612217
-│                                           modifies it.
+│                                           keys as fmt does. CL 612217 modifies it.
 └── maps/
     └── maps.go                          ★  existing; CL 760800 adds Identical
                                             (#78456), which mapset uses for aliasing
