@@ -28,52 +28,52 @@ The interfaces, with some lines reordered for presentation.
 // _AbstractCollection models a collection C of elements E,
 // such as *hash.Map, *hash.Set, *ordered.Map, or set.Set.
 type _AbstractCollection[E any, C _AbstractCollection[E, C]] interface {
-	Clear()
-	Clone() C
-	Contains(E) bool
-	ContainsAll(iter.Seq[E]) bool
-	Len() int
-	String() string
+    Clear()
+    Clone() C
+    Contains(E) bool
+    ContainsAll(iter.Seq[E]) bool
+    Len() int
+    String() string
 }
 
 // _AbstractMap models a mapping M from keys K to values V,
 // such as *hash.Map or *ordered.Map.
 type _AbstractMap[K, V any, M _AbstractMap[K, V, M]] interface {
-	_AbstractCollection[K, M]
+    _AbstractCollection[K, M]
 
-	Set(K, V) (V, bool)
-	SetAll(iter.Seq2[K, V]) bool
-	Get(K) (V, bool)
-	At(K) V
-	All() iter.Seq2[K, V]
-	Keys() iter.Seq[K]
-	Values() iter.Seq[V]
-	Delete(K) (V, bool)
-	DeleteAll(iter.Seq[K]) bool
-	DeleteFunc(func(K, V) bool) bool
+    Set(K, V) (V, bool)
+    SetAll(iter.Seq2[K, V]) bool
+    Get(K) (V, bool)
+    At(K) V
+    All() iter.Seq2[K, V]
+    Keys() iter.Seq[K]
+    Values() iter.Seq[V]
+    Delete(K) (V, bool)
+    DeleteAll(iter.Seq[K]) bool
+    DeleteFunc(func(K, V) bool) bool
 }
 
 // _AbstractSet models a set S of elements E,
 // such as *hash.Set, or set.Set.
 type _AbstractSet[E any, S _AbstractSet[E, S]] interface {
-	_AbstractCollection[E, S]
+    _AbstractCollection[E, S]
 
-	Insert(E) bool
-	InsertAll(iter.Seq[E]) bool
-	Equal(S) bool
-	All() iter.Seq[E]
-	Intersection(S) S
-	IntersectionWith(S)
-	Intersects(S) bool
-	Union(S) S
-	UnionWith(S)
-	Difference(S) S
-	DifferenceWith(S)
-	SymmetricDifference(S) S
-	SymmetricDifferenceWith(S)
-	Delete(E) bool
-	DeleteAll(iter.Seq[E]) bool
-	DeleteFunc(func(E) bool) bool
+    Insert(E) bool
+    InsertAll(iter.Seq[E]) bool
+    Equal(S) bool
+    All() iter.Seq[E]
+    Delete(E) bool
+    DeleteAll(iter.Seq[E]) bool
+    DeleteFunc(func(E) bool) bool
+    Intersection(S) S
+    IntersectionWith(S)
+    Intersects(S) bool
+    Union(S) S
+    UnionWith(S)
+    Difference(S) S
+    DifferenceWith(S)
+    SymmetricDifference(S) S
+    SymmetricDifferenceWith(S)
 }
 
 // NOTES
