@@ -5,10 +5,10 @@
 package container_test
 
 import (
-	"github.com/ramalho/sets-in-go/vendored/hash"
-	"github.com/ramalho/sets-in-go/vendored/set"
-	"iter"
-	"testing"
+    "github.com/ramalho/sets-in-go/vendored/hash"
+    "github.com/ramalho/sets-in-go/vendored/set"
+    "iter"
+    "testing"
 )
 
 // The following interfaces define the abstract data types for
@@ -59,52 +59,52 @@ import (
 // _AbstractCollection models a collection C of elements E,
 // such as *hash.Map, *hash.Set, *ordered.Map, or set.Set.
 type _AbstractCollection[E any, C _AbstractCollection[E, C]] interface {
-	Clear()
-	Clone() C
-	Contains(E) bool
-	ContainsAll(iter.Seq[E]) bool
-	Len() int
-	String() string
+    Clear()
+    Clone() C
+    Contains(E) bool
+    ContainsAll(iter.Seq[E]) bool
+    Len() int
+    String() string
 }
 
 // _AbstractMap models a mapping M from keys K to values V,
 // such as *hash.Map or *ordered.Map.
 type _AbstractMap[K, V any, M _AbstractMap[K, V, M]] interface {
-	_AbstractCollection[K, M]
+    _AbstractCollection[K, M]
 
-	All() iter.Seq2[K, V]
-	At(K) V
-	Delete(K) (V, bool)
-	DeleteAll(iter.Seq[K]) bool
-	DeleteFunc(func(K, V) bool) bool
-	Get(K) (V, bool)
-	Keys() iter.Seq[K]
-	Set(K, V) (V, bool)
-	SetAll(iter.Seq2[K, V]) bool
-	Values() iter.Seq[V]
+    All() iter.Seq2[K, V]
+    At(K) V
+    Delete(K) (V, bool)
+    DeleteAll(iter.Seq[K]) bool
+    DeleteFunc(func(K, V) bool) bool
+    Get(K) (V, bool)
+    Keys() iter.Seq[K]
+    Set(K, V) (V, bool)
+    SetAll(iter.Seq2[K, V]) bool
+    Values() iter.Seq[V]
 }
 
 // _AbstractSet models a set S of elements E,
 // such as *hash.Set, or set.Set.
 type _AbstractSet[E any, S _AbstractSet[E, S]] interface {
-	_AbstractCollection[E, S]
+    _AbstractCollection[E, S]
 
-	All() iter.Seq[E]
-	Delete(E) bool
-	DeleteAll(iter.Seq[E]) bool
-	DeleteFunc(func(E) bool) bool
-	Difference(S) S
-	DifferenceWith(S)
-	Equal(S) bool
-	Insert(E) bool
-	InsertAll(iter.Seq[E]) bool
-	Intersection(S) S
-	IntersectionWith(S)
-	Intersects(S) bool
-	SymmetricDifference(S) S
-	SymmetricDifferenceWith(S)
-	Union(S) S
-	UnionWith(S)
+    All() iter.Seq[E]
+    Delete(E) bool
+    DeleteAll(iter.Seq[E]) bool
+    DeleteFunc(func(E) bool) bool
+    Difference(S) S
+    DifferenceWith(S)
+    Equal(S) bool
+    Insert(E) bool
+    InsertAll(iter.Seq[E]) bool
+    Intersection(S) S
+    IntersectionWith(S)
+    Intersects(S) bool
+    SymmetricDifference(S) S
+    SymmetricDifferenceWith(S)
+    Union(S) S
+    UnionWith(S)
 }
 
 // NOTES
@@ -149,68 +149,68 @@ func Test(*testing.T) {} // placeholder
 
 // ContainsAny reports whether set x contains any element of sequence y.
 func ContainsAny[E any, S _AbstractSet[E, S]](x S, y iter.Seq[E]) bool {
-	for elem := range y {
-		if x.Contains(elem) {
-			return true
-		}
-	}
-	return false
+    for elem := range y {
+        if x.Contains(elem) {
+            return true
+        }
+    }
+    return false
 }
 
 // Take removes and returns an arbitrary element from a set.
 // It returns zero if the set was empty.
 func Take[S _AbstractSet[E, S], E any](set S) (e E, found bool) {
-	for e = range set.All() {
-		found = true
-		set.Delete(e) // may fail for NaN
-		break
-	}
-	return
+    for e = range set.All() {
+        found = true
+        set.Delete(e) // may fail for NaN
+        break
+    }
+    return
 }
 
 // Take2 removes and returns an arbitrary key/value entry from a map.
 // It returns zero if the map was entry.
 func Take2[M _AbstractMap[K, V, M], K, V any](m M) (k K, v V, found bool) {
-	for k, v = range m.All() {
-		found = true
-		m.Delete(k) // may fail for NaN
-		break
-	}
-	return
+    for k, v = range m.All() {
+        found = true
+        m.Delete(k) // may fail for NaN
+        break
+    }
+    return
 }
 
 // Arbitrary returns an arbitrary element from a set.
 // It returns zero if the set was empty.
 func Arbitrary[S _AbstractSet[E, S], E any](set S) (e E, found bool) {
-	for e = range set.All() {
-		found = true
-		break
-	}
-	return
+    for e = range set.All() {
+        found = true
+        break
+    }
+    return
 }
 
 // Arbitrary2 removes and returns an arbitrary key/value entry from a map.
 // It returns zero if the map was entry.
 func Arbitrary2[M _AbstractMap[K, V, M], K, V any](m M) (k K, v V, found bool) {
-	for k, v = range m.All() {
-		break
-	}
-	return
+    for k, v = range m.All() {
+        break
+    }
+    return
 }
 
 // Subset reports whether set x is a subset of set y.
 func Subset[S _AbstractSet[E, S], E any](x, y S) bool {
-	// We cannot shortcut if x == y here because
-	// it may panic for some types (e.g. maps) or give
-	// the wrong answer for others (e.g. strings
-	// considered as unordered sets of bytes).
-	// Secondarily, pointer identity also doesn't
-	// repect NaN != NaN.
+    // We cannot shortcut if x == y here because
+    // it may panic for some types (e.g. maps) or give
+    // the wrong answer for others (e.g. strings
+    // considered as unordered sets of bytes).
+    // Secondarily, pointer identity also doesn't
+    // repect NaN != NaN.
 
-	return x.Len() <= y.Len() && y.ContainsAll(x.All())
+    return x.Len() <= y.Len() && y.ContainsAll(x.All())
 }
 
 // Superset reports whether x is a superset of y.
 func Superset[S _AbstractSet[E, S], E any](x, y S) bool {
-	return Subset(y, x)
+    return Subset(y, x)
 }
