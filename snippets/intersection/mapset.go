@@ -28,13 +28,13 @@
 //
 // Example:
 //
-//	a := mapset.Of(1, 2, 3)
-//	b := mapset.Of(3, 4, 5)
-//	fmt.Println(mapset.String(mapset.Union(a, b))) // {1, 2, 3, 4, 5}
+//  a := mapset.Of(1, 2, 3)
+//  b := mapset.Of(3, 4, 5)
+//  fmt.Println(mapset.String(mapset.Union(a, b))) // {1, 2, 3, 4, 5}
 package mapset
 
 import (
-	"github.com/ramalho/sets-in-go/vendored/internal/maps"
+    "github.com/ramalho/sets-in-go/vendored/internal/maps"
 )
 
 /// ...
@@ -45,8 +45,16 @@ import (
 
 // Contains reports whether set x contains key k.
 func Contains[M ~map[K]V, K comparable, V bool | struct{}](x M, k K) bool {
-	_, ok := x[k]
-	return ok
+    _, ok := x[k]
+    return ok
+}
+
+func copy[MD ~map[K]VD, MS ~map[K]VS, K comparable, VD, VS bool | struct{}](dst MD, src MS) {
+    // Avoid maps.Clone, which may return nil,
+    // and may propagate 'false' values.
+    for k := range src {
+        insert(dst, k)
+    }
 }
 
 // -- binary operations --
@@ -54,48 +62,42 @@ func Contains[M ~map[K]V, K comparable, V bool | struct{}](x M, k K) bool {
 // / ...
 // Intersection returns a new map containing the intersection of x and y.
 func Intersection[MX ~map[K]VX, MY ~map[K]VY, K comparable, VX, VY bool | struct{}](x MX, y MY) MX {
-	z := make(MX)
+    z := make(MX)
 
-	if maps.Identical(x, y) {
-		copy(z, x)
-		return z
-	}
+    if maps.Identical(x, y) {
+        copy(z, x)
+        return z
+    }
 
-	// Iterate over the smaller of the two maps.
-	if len(x) < len(y) {
-		for k := range x {
-			if Contains(y, k) {
-				insert(z, k)
-			}
-		}
-	} else {
-		for k := range y {
-			if Contains(x, k) {
-				insert(z, k)
-			}
-		}
-	}
-	return z
+    // Iterate over the smaller of the two maps.
+    if len(x) < len(y) {
+        for k := range x {
+            if Contains(y, k) {
+                insert(z, k)
+            }
+        }
+    } else {
+        for k := range y {
+            if Contains(x, k) {
+                insert(z, k)
+            }
+        }
+    }
+    return z
 }
 
 /// ...
 
-func copy[MD ~map[K]VD, MS ~map[K]VS, K comparable, VD, VS bool | struct{}](dst MD, src MS) {
-	// Avoid maps.Clone, which may return nil,
-	// and may propagate 'false' values.
-	for k := range src {
-		insert(dst, k)
-	}
-}
+
 
 // IntersectionWith updates x to the [Intersection] of x and y.
 func IntersectionWith[M ~map[K]V, K comparable, V bool | struct{}](x, y M) {
-	if maps.Identical(x, y) {
-		return // x ∩ x = x
-	}
-	for k := range x {
-		if !Contains(y, k) {
-			delete(x, k)
-		}
-	}
+    if maps.Identical(x, y) {
+        return // x ∩ x = x
+    }
+    for k := range x {
+        if !Contains(y, k) {
+            delete(x, k)
+        }
+    }
 }
