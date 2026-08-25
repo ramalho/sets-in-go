@@ -31,15 +31,15 @@ func main() {
 	w := bufio.NewWriter(f)
 	defer w.Flush()
 
-	unique := make(map[uint64]struct{}, count)
+	seen := make(map[uint64]struct{}, count)
 	rng := rand.New(rand.NewSource(seed))
 
-	for len(unique) < count {
+	for len(seen) < count {
 		n := rng.Uint64()
-		unique[n] = struct{}{}
-	}
-
-	for n := range unique {
+		if _, dup := seen[n]; dup {
+			continue
+		}
+		seen[n] = struct{}{}
 		if _, err := w.WriteString(strconv.FormatUint(n, 10)); err != nil {
 			log.Fatal(err)
 		}
