@@ -32,13 +32,16 @@ func main() {
 	defer w.Flush()
 
 	seen := make(map[int]struct{}, count)
+	sample := make([]int, count)
 	rng := rand.New(rand.NewSource(seed))
 
 	for len(seen) < count {
-		seen[rng.Int()] = struct{}{}
+		n := rng.Int()
+		sample[len(seen)] = n
+		seen[n] = struct{}{}
 	}
 
-	for n := range seen {
+	for _, n := range sample {
 		if _, err := w.WriteString(strconv.Itoa(n)); err != nil {
 			log.Fatal(err)
 		}

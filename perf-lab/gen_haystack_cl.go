@@ -31,16 +31,16 @@ func main() {
 	w := bufio.NewWriter(f)
 	defer w.Flush()
 
-	seen := make(map[uint64]struct{}, count)
+	seen := make(map[int]struct{}, count)
 	rng := rand.New(rand.NewSource(seed))
 
 	for len(seen) < count {
-		n := rng.Uint64()
+		n := rng.Int()
 		if _, dup := seen[n]; dup {
 			continue
 		}
 		seen[n] = struct{}{}
-		if _, err := w.WriteString(strconv.FormatUint(n, 10)); err != nil {
+		if _, err := w.WriteString(strconv.Itoa(n)); err != nil {
 			log.Fatal(err)
 		}
 		if err := w.WriteByte('\n'); err != nil {
@@ -48,5 +48,5 @@ func main() {
 		}
 	}
 
-	fmt.Printf("wrote %d distinct uint64 numbers to haystack.txt\n", count)
+	fmt.Printf("wrote %d distinct integers to haystack.txt\n", count)
 }

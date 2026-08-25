@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"slices"
 	"strconv"
 )
 
@@ -31,23 +32,16 @@ func main() {
 	w := bufio.NewWriter(f)
 	defer w.Flush()
 
-	seen := make([]uint64, 0, count)
+	seen := make([]int, 0, count)
 	rng := rand.New(rand.NewSource(seed))
 
 	for len(seen) < count {
-		n := rng.Uint64()
-		dup := false
-		for _, x := range seen {
-			if x == n {
-				dup = true
-				break
-			}
-		}
-		if dup {
+		n := rng.Int()
+		if slices.Contains(seen, n) {
 			continue
 		}
 		seen = append(seen, n)
-		if _, err := w.WriteString(strconv.FormatUint(n, 10)); err != nil {
+		if _, err := w.WriteString(strconv.Itoa(n)); err != nil {
 			log.Fatal(err)
 		}
 		if err := w.WriteByte('\n'); err != nil {
@@ -55,5 +49,5 @@ func main() {
 		}
 	}
 
-	fmt.Printf("wrote %d distinct uint64 numbers to haystack.txt\n", count)
+	fmt.Printf("wrote %d distinct integers to haystack.txt\n", count)
 }
