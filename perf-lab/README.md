@@ -1,5 +1,13 @@
 # Performance experiments
 
+## Deduplication: four spellings compared
+
+[`dedup/`](dedup/) benchmarks the deduplication rule from the `unigo` commands
+written four ways — two hand-written map idioms, `mapset.Insert`, and
+`set.Set.Insert`. The ranking flips with the duplicate ratio, for the same
+reason `gen_haystack.go` below got faster: `Insert` trades a wasted write on
+duplicates for a saved lookup on new elements. See [`dedup/README.md`](dedup/README.md).
+
 ## Generate haystack
 
 These scripts generate a file named `haystack.txt` with unique

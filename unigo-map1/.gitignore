@@ -1,0 +1,2 @@
+# the built binary — the repo root .gitignore only covers .exe/.so/.dylib
+/unigo-map1
