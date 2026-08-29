@@ -25,7 +25,7 @@ HASH_PS=${HASH_PS:-21}
 ITER_CL=745440 # iter: add Every, Some -- see internal/iter (not fetched)
 
 # The module needs hash/maphash.Hasher, new in Go 1.27.
-GO=${GO:-go1.27rc2}
+GO=${GO:-go}
 MODULE=github.com/ramalho/sets-in-go/vendored
 GERRIT=https://go-review.googlesource.com
 cd "$(dirname "$0")"
