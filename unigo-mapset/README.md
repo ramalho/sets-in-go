@@ -3,7 +3,7 @@
 `unigo-mapset` is the third of three identical programs. The set of lines
 already seen is a plain `map[string]struct{}`, exactly as in
 [`unigo-map`](../unigo-map) — but the deduplication rule is a single call to
-`mapset.Insert`, exactly as concise as [`unigo`](../unigo):
+`mapset.Insert`, exactly as concise as [`unigo`](../unigo-set:
 
 ```go
 seen := make(map[string]struct{})
@@ -61,7 +61,7 @@ step forcing the next:
 
 1. `map[string]struct{}` with hand-written lookups — [`unigo-map`](../unigo-map)
 2. the same map, operations from `mapset` — this directory
-3. `set.Set[string]`, operations as methods — [`unigo`](../unigo)
+3. `set.Set[string]`, operations as methods — [`unigo`](../unigo-set
 
 Step 2 is a pure addition: no type changes, no conversions, and `mapset` and
 plain map syntax mix freely in the same function. Step 3 is a type change, and
@@ -98,7 +98,7 @@ function is free; only the strategy it implements has a price.
 ## Everything else
 
 Behavior, structure, and trade-offs match the other two, and
-[`unigo/README.md`](../unigo/README.md) documents them: why plain `uniq` does
+[`unigo/README.md`](../unigo-setREADME.md) documents them: why plain `uniq` does
 not do this, memory proportional to the number of **distinct** lines, the
 64 KiB `bufio.Scanner` line limit, and `main` as a one-line wrapper over
 `run(args, stdin, stdout, stderr) int` so the command is testable in-process.

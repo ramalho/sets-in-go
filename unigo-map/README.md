@@ -1,6 +1,6 @@
 # unigo-map — the same tool, with a bare map
 
-`unigo-map` is [`unigo`](../unigo) written against today's Go: the set of lines
+`unigo-map` is [`unigo`](../unigo-set written against today's Go: the set of lines
 already seen is a `map[string]struct{}` instead of the proposed
 `container/set`. Same features, same structure, same tests — the two programs
 differ in one `if` and one import.
@@ -75,7 +75,7 @@ the one-step version with a bare map too — see
 ## Everything else
 
 Behavior, structure, and trade-offs are identical to `unigo`, and
-[its README](../unigo/README.md) documents them:
+[its README](../unigo-setREADME.md) documents them:
 
 * why plain `uniq` does not do this, and what `sort | uniq` costs instead;
 * memory proportional to the number of **distinct** lines;

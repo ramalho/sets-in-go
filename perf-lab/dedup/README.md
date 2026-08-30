@@ -9,7 +9,7 @@ commands, written four ways with the I/O stripped out:
 | `MapBool`   | `map[string]bool`     | `if !seen[line]`                    | two | the other legacy idiom |
 | `MapLen`    | `map[string]struct{}` | store, then `if len(seen) != before` | one | [`../../unigo-map1`](../../unigo-map1) |
 | `Mapset`    | `map[string]struct{}` | `if mapset.Insert(seen, line)`      | one | [`../../unigo-mapset`](../../unigo-mapset) |
-| `Set`       | `set.Set[string]`     | `if seen.Insert(line)`              | one | [`../../unigo`](../../unigo) |
+| `Set`       | `set.Set[string]`     | `if seen.Insert(line)`              | one | [`../../unigo-set](../../unigo-set |
 
 The last three are the same strategy at three levels of abstraction: written
 out by hand, behind a generic function, and behind a method. `MapLen` is the

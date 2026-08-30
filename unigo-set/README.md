@@ -6,7 +6,7 @@ line exactly once, in order of first appearance.
 From the repository root:
 
 ```sh
-go run ./unigo unigo/testdata/input.txt
+go run ./unigo-setunigo/testdata/input.txt
 
 cat unigo/testdata/input.txt | go run ./unigo
 ```
@@ -30,7 +30,7 @@ original order:
 
 ```sh
 sort file.txt | uniq     # sorted output
-go run ./unigo file.txt   # first-occurrence order, one pass
+go run ./unigo-setfile.txt   # first-occurrence order, one pass
 ```
 
 `unigo` needs no `sort` because it remembers every line it has already seen.
@@ -96,20 +96,20 @@ the command testable in-process — `os.Exit` would terminate the test binary.
 ## Building and testing
 
 ```sh
-go test ./unigo                 # from the repository root
-go build -o unigo/unigo ./unigo   # note the -o
+go test ./unigo-set                # from the repository root
+go build -o unigo/unigo-set./unigo-set  # note the -o
 ```
 
 Two quirks of this workspace are worth knowing:
 
-* **`go build ./unigo` fails** with `build output "unigo" already exists and is a
+* **`go build ./unigo-set fails** with `build output "unigo" already exists and is a
   directory` — the binary would have the same name as the directory holding it.
-  Pass `-o` with an explicit path, or just use `go run ./unigo`.
+  Pass `-o` with an explicit path, or just use `go run ./unigo-set.
 
 * **`go build ./...` does not work from the repository root**, which is not
   itself a module:
   `pattern ./...: directory prefix . does not contain modules listed in go.work`.
-  Name the modules instead — `go build ./unigo ./examples/... ./vendored/...` —
+  Name the modules instead — `go build ./unigo-set./examples/... ./vendored/...` —
   or `cd` into one first. This applies to the whole repo, not just `unigo`.
 
 `unigo` is listed in [`go.work`](../go.work), so the import of `vendored/set`

@@ -42,7 +42,7 @@ func Insert[M ~map[K]V, K comparable, V bool | struct{}](x M, elem K) bool {
 
 So `unigo-map1` is [`unigo-mapset`](../unigo-mapset) with the helper inlined by
 hand, and — since `set.Set.Insert` delegates to `mapset.Insert` — it is
-[`unigo`](../unigo) too. Three programs, one strategy, three spellings.
+[`unigo`](../unigo-set too. Three programs, one strategy, three spellings.
 
 That makes it the control in the experiment. Comparing it against the other two
 answers a question the others cannot: **does the generic helper cost anything?**
@@ -94,7 +94,7 @@ operations.
 ## Everything else
 
 Behavior, structure, and trade-offs match the other variants, and
-[`unigo/README.md`](../unigo/README.md) documents them: why plain `uniq` does
+[`unigo/README.md`](../unigo-setREADME.md) documents them: why plain `uniq` does
 not do this, memory proportional to the number of **distinct** lines, the
 64 KiB `bufio.Scanner` line limit, and `main` as a one-line wrapper over
 `run(args, stdin, stdout, stderr) int` so the command is testable in-process.

@@ -1,7 +1,7 @@
 // Command unigo-mapset reads lines from a file (or standard input) and writes
 // each distinct line exactly once, in order of first appearance.
 //
-// It is the same program as ../unigo and ../unigo-map, in the middle position:
+// It is the same program as ../unigo-setand ../unigo-map, in the middle position:
 // the set of lines already seen is a plain map[string]struct{}, as in existing
 // Go code, but the deduplication rule is one call to [mapset.Insert] rather
 // than a lookup followed by a store. Adopting the helper package costs no

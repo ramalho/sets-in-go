@@ -1,7 +1,7 @@
 // Command unigo-map reads lines from a file (or standard input) and writes
 // each distinct line exactly once, in order of first appearance.
 //
-// It is line-for-line the same program as ../unigo, except that the set of
+// It is line-for-line the same program as ../unigo-set except that the set of
 // lines already seen is the idiomatic map[string]struct{} rather than the
 // proposed container/set. Only the deduplication rule below differs: with a
 // bare map there is no Insert reporting whether the set changed, so the test

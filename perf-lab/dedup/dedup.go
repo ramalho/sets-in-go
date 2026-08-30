@@ -9,7 +9,7 @@
 //   - [MapBool]   is the other legacy idiom: map[string]bool.
 //   - [MapLen]    is ../../unigo-map1: store, then check whether len changed.
 //   - [Mapset]    is ../../unigo-mapset: a plain map, one call to mapset.Insert.
-//   - [Set]       is ../../unigo: the proposed container/set type.
+//   - [Set]       is ../../unigo-set the proposed container/set type.
 //
 // The four differ only in how they ask "is this line new?", and they allocate
 // exactly the same: set.Set[E] is defined as map[E]struct{}, so no wrapper
