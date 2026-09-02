@@ -59,8 +59,8 @@ func writeUnique(input io.Reader, output io.Writer) error {
 	for lines.Scan() {
 		line := lines.Text()
 		before := len(seen)
-		seen[line] = struct{}{}  // just put it there...
-		if len(seen) != before { // ...and see whether that added anything
+		seen[line] = struct{}{} // just put it there...
+		if len(seen) > before { // ...and check map growth
 			fmt.Fprintln(buf, line)
 		}
 	}

@@ -57,7 +57,7 @@ func writeUnique(input io.Reader, output io.Writer) error {
 	lines := bufio.NewScanner(input)
 	for lines.Scan() {
 		line := lines.Text()
-		if mapset.Insert(seen, line) { // Insert reports whether the set changed
+		if mapset.Insert(seen, line) { // true when map changed
 			fmt.Fprintln(buf, line)
 		}
 	}
