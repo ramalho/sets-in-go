@@ -1,0 +1,48 @@
+// unigo-set
+seen := make(set.Set[string])
+for lines.Scan() {
+	line := lines.Text()
+	if seen.Insert(line) { // true when set changed
+		fmt.Fprintln(buf, line)
+	}
+}
+
+// unigo-mapset
+seen := make(map[string]struct{})
+for lines.Scan() {
+	line := lines.Text()
+	if mapset.Insert(seen, line) { // true when map changed
+		fmt.Fprintln(buf, line)
+	}
+}
+
+// unigo-maplen
+seen := make(map[string]struct{})
+for lines.Scan() {
+	line := lines.Text()
+	before := len(seen)
+	seen[line] = struct{}{} // just put it there...
+	if len(seen) > before { // ...and check map growth
+		fmt.Fprintln(buf, line)
+	}
+}
+
+// unigo-map
+seen := make(map[string]struct{})
+for lines.Scan() {
+	line := lines.Text()
+	if _, dup := seen[line]; !dup { // look it up...
+		seen[line] = struct{}{} // ...then store it
+		fmt.Fprintln(buf, line)
+	}
+}
+
+// unigo-mapbool
+seen := make(map[string]bool)
+for lines.Scan() {
+	line := lines.Text()
+	if !seen[line] { // zero value false means "not seen"...
+		seen[line] = true // ...then store it
+		fmt.Fprintln(buf, line)
+	}
+}
