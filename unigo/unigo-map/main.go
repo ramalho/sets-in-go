@@ -53,10 +53,10 @@ func run(cmdName string, args []string, stdin io.Reader, stdout, stderr io.Write
 // writeUnique copies input to output,
 // keeping only the first occurrence of each line.
 func writeUnique(input io.Reader, output io.Writer) error {
+	lines := bufio.NewScanner(input)
 	buf := bufio.NewWriter(output)
 
 	seen := make(map[string]struct{})
-	lines := bufio.NewScanner(input)
 	for lines.Scan() {
 		line := lines.Text()
 		if _, dup := seen[line]; !dup { // look it up...
