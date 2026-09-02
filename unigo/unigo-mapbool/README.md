@@ -56,8 +56,9 @@ Behavior, structure, and trade-offs are identical to `unigo-map`, and
 * why plain `uniq` does not do this, and what `sort | uniq` costs instead;
 * memory proportional to the number of **distinct** lines;
 * the 64 KiB `bufio.Scanner` line limit;
-* `main` as a one-line wrapper over `run(args, stdin, stdout, stderr) int`, so
-  the command is testable in-process without `os.Exit` killing the test binary.
+* `main` as a thin wrapper over
+  `run(cmdName, args, stdin, stdout, stderr) int`, so the command is testable
+  in-process without `os.Exit` killing the test binary.
 
 `main_test.go` is a byte-for-byte copy of `unigo-map/main_test.go` — the same
 tests pass against both implementations, which is the point.

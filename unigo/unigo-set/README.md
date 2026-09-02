@@ -26,7 +26,7 @@ func writeUnique(input io.Reader, output io.Writer) error {
 	lines := bufio.NewScanner(input)
 	for lines.Scan() {
 		line := lines.Text()
-		if seen.Insert(line) { // Insert reports whether the set changed
+		if seen.Insert(line) { // true when set changed
 			fmt.Fprintln(buf, line)
 		}
 	}

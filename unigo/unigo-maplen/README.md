@@ -8,8 +8,8 @@ unconditionally and asks whether the map grew:
 seen := make(map[string]struct{})
 ...
 before := len(seen)
-seen[line] = struct{}{}  // just put it there...
-if len(seen) != before { // ...and see whether that added anything
+seen[line] = struct{}{} // just put it there...
+if len(seen) > before { // ...and check map growth
 	fmt.Fprintln(buf, line)
 }
 ```
@@ -96,8 +96,9 @@ operations.
 Behavior, structure, and trade-offs match the other variants, and
 [the family README](../README.md) documents them: why plain `uniq` does not do
 this, memory proportional to the number of **distinct** lines, the 64 KiB
-`bufio.Scanner` line limit, and `main` as a one-line wrapper over
-`run(args, stdin, stdout, stderr) int` so the command is testable in-process.
+`bufio.Scanner` line limit, and `main` as a thin wrapper over
+`run(cmdName, args, stdin, stdout, stderr) int` so the command is testable
+in-process.
 `main_test.go` is a byte-for-byte copy of `unigo-set/main_test.go`.
 
 ## Building and testing

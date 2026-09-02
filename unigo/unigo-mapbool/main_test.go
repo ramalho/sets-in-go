@@ -12,6 +12,10 @@ import (
 // run takes its I/O as arguments, so these tests drive the whole command
 // in-process: no subprocess, no redirection of os.Stdout.
 
+// testCmdName stands in for os.Args[0]; the same value in every variant, so
+// main_test.go stays byte-for-byte identical across all of them.
+const testCmdName = "unigo"
+
 // exercise calls run with the given standard input (which may be nil)
 // and arguments, capturing what it writes.
 func exercise(stdin io.Reader, args ...string) (stdout, stderr string, code int) {
@@ -19,7 +23,7 @@ func exercise(stdin io.Reader, args ...string) (stdout, stderr string, code int)
 	if stdin == nil {
 		stdin = strings.NewReader("")
 	}
-	code = run(args, stdin, &out, &errs)
+	code = run(testCmdName, args, stdin, &out, &errs)
 	return out.String(), errs.String(), code
 }
 

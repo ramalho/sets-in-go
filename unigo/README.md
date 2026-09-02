@@ -70,20 +70,28 @@ Every variant has the same three functions:
 
 ```go
 func main() {
-	os.Exit(run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr))
+	cmdName := filepath.Base(os.Args[0])
+	os.Exit(run(cmdName, os.Args[1:], os.Stdin, os.Stdout, os.Stderr))
 }
 
-func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int
+func run(cmdName string, args []string, stdin io.Reader, stdout, stderr io.Writer) int
 
 func writeUnique(input io.Reader, output io.Writer) error
 ```
 
-`main` is a one-line wrapper over `run`, which takes its I/O as arguments.
+`main` is a thin wrapper over `run`, which takes its name and I/O as arguments.
 Returning the exit code instead of calling `os.Exit` inside `run` is what makes
 the command testable in-process — `os.Exit` would terminate the test binary.
 `main_test.go` drives `run` with `strings.Reader` and `bytes.Buffer`, and is
 copied unchanged into every variant: the same tests pass against all five,
 which is the point.
+
+`cmdName` is passed in rather than hardcoded, so each message names whatever
+the binary is actually called: rename it to `dedupe` and it reports
+`usage: dedupe [file.txt]`. `filepath.Base` strips the directory, so the name
+is the same however the command is invoked — by relative path, absolute path,
+or bare name found on `PATH`. Under `go run` you will see `unigo` instead,
+because that is what Go calls the temporary binary it builds.
 
 `run` handles arguments and reports errors; `writeUnique` does the work. That
 split is why the variants are worth comparing at all — `writeUnique` is the

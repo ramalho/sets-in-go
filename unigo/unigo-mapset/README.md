@@ -8,7 +8,7 @@ already seen is a plain `map[string]struct{}`, exactly as in
 ```go
 seen := make(map[string]struct{})
 ...
-if mapset.Insert(seen, line) { // Insert reports whether the set changed
+if mapset.Insert(seen, line) { // true when map changed
 	fmt.Fprintln(buf, line)
 }
 ```
@@ -100,8 +100,9 @@ function is free; only the strategy it implements has a price.
 Behavior, structure, and trade-offs match the other variants, and
 [the family README](../README.md) documents them: why plain `uniq` does
 not do this, memory proportional to the number of **distinct** lines, the
-64 KiB `bufio.Scanner` line limit, and `main` as a one-line wrapper over
-`run(args, stdin, stdout, stderr) int` so the command is testable in-process.
+64 KiB `bufio.Scanner` line limit, and `main` as a thin wrapper over
+`run(cmdName, args, stdin, stdout, stderr) int` so the command is testable
+in-process.
 `main_test.go` is a byte-for-byte copy of `unigo-set/main_test.go`.
 
 ## Building and testing
