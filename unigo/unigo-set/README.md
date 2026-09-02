@@ -31,7 +31,7 @@ func writeUnique(input io.Reader, output io.Writer) error {
 		}
 	}
 
-	// Flush always; report read error if it happens
+	// Report read error if it happens; flush always
 	return cmp.Or(lines.Err(), buf.Flush())
 }
 ```

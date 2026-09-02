@@ -49,8 +49,8 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	return 0
 }
 
-// writeUnique copies input to output, keeping only the first occurrence of
-// each line. It is the whole program; everything else is plumbing.
+// writeUnique copies input to output,
+// keeping only the first occurrence of each line.
 func writeUnique(input io.Reader, output io.Writer) error {
 	buf := bufio.NewWriter(output)
 
@@ -65,6 +65,6 @@ func writeUnique(input io.Reader, output io.Writer) error {
 		}
 	}
 
-	// Flush always; report read error if it happens
+	// Report read error if it happens; flush always
 	return cmp.Or(lines.Err(), buf.Flush())
 }
