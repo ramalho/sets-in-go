@@ -24,7 +24,7 @@ changed, so the whole deduplication rule is one expression:
 seen := make(set.Set[string])
 ...
 if seen.Insert(line) { // Insert reports whether the set changed
-	fmt.Fprintln(out, line)
+	fmt.Fprintln(buf, line)
 }
 ```
 
@@ -37,7 +37,7 @@ seen := make(map[string]struct{})
 ...
 if _, dup := seen[line]; !dup { // look it up...
 	seen[line] = struct{}{} // ...then store it
-	fmt.Fprintln(out, line)
+	fmt.Fprintln(buf, line)
 }
 ```
 

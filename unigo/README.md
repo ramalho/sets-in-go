@@ -66,8 +66,7 @@ the `slices.Sort` + `slices.Compact` recipe — the in-memory equivalent of
 
 ## Structure
 
-Every variant has the same shape. `main` is a one-line wrapper over `run`,
-which takes its I/O as arguments:
+Every variant has the same three functions:
 
 ```go
 func main() {
@@ -75,13 +74,21 @@ func main() {
 }
 
 func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int
+
+func writeUnique(input io.Reader, output io.Writer) error
 ```
 
+`main` is a one-line wrapper over `run`, which takes its I/O as arguments.
 Returning the exit code instead of calling `os.Exit` inside `run` is what makes
 the command testable in-process — `os.Exit` would terminate the test binary.
 `main_test.go` drives `run` with `strings.Reader` and `bytes.Buffer`, and is
 copied unchanged into every variant: the same tests pass against all five,
 which is the point.
+
+`run` handles arguments and reports errors; `writeUnique` does the work. That
+split is why the variants are worth comparing at all — `writeUnique` is the
+*only* function that differs between them, and its body is the snippet each
+variant's README quotes. Everything above it is identical plumbing.
 
 ## Building and testing
 

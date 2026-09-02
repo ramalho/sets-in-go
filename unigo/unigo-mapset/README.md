@@ -9,7 +9,7 @@ already seen is a plain `map[string]struct{}`, exactly as in
 seen := make(map[string]struct{})
 ...
 if mapset.Insert(seen, line) { // Insert reports whether the set changed
-	fmt.Fprintln(out, line)
+	fmt.Fprintln(buf, line)
 }
 ```
 

@@ -42,7 +42,17 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return 1
 	}
 
-	out := bufio.NewWriter(stdout)
+	if err := writeUnique(input, stdout); err != nil {
+		fmt.Fprintf(stderr, "unigo-maplen: %v\n", err)
+		return 1
+	}
+	return 0
+}
+
+// writeUnique copies input to output, keeping only the first occurrence of
+// each line. It is the whole program; everything else is plumbing.
+func writeUnique(input io.Reader, output io.Writer) error {
+	buf := bufio.NewWriter(output)
 
 	seen := make(map[string]struct{})
 	lines := bufio.NewScanner(input)
@@ -51,15 +61,10 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		before := len(seen)
 		seen[line] = struct{}{}  // just put it there...
 		if len(seen) != before { // ...and see whether that added anything
-			fmt.Fprintln(out, line)
+			fmt.Fprintln(buf, line)
 		}
 	}
 
-	// cmp.Or evaluates both arguments, so the buffer is always flushed;
-	// a read error wins over a write error when both happen.
-	if err := cmp.Or(lines.Err(), out.Flush()); err != nil {
-		fmt.Fprintf(stderr, "unigo-maplen: %v\n", err)
-		return 1
-	}
-	return 0
+	// Flush always; report read error if it happens
+	return cmp.Or(lines.Err(), buf.Flush())
 }

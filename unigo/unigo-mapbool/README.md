@@ -26,7 +26,7 @@ seen := make(map[string]struct{})
 ...
 if _, dup := seen[line]; !dup { // look it up...
 	seen[line] = struct{}{} // ...then store it
-	fmt.Fprintln(out, line)
+	fmt.Fprintln(buf, line)
 }
 ```
 
@@ -38,7 +38,7 @@ seen := make(map[string]bool)
 ...
 if !seen[line] { // zero value false means "not seen"...
 	seen[line] = true // ...then store it
-	fmt.Fprintln(out, line)
+	fmt.Fprintln(buf, line)
 }
 ```
 

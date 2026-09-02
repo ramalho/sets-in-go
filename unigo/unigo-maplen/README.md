@@ -10,7 +10,7 @@ seen := make(map[string]struct{})
 before := len(seen)
 seen[line] = struct{}{}  // just put it there...
 if len(seen) != before { // ...and see whether that added anything
-	fmt.Fprintln(out, line)
+	fmt.Fprintln(buf, line)
 }
 ```
 

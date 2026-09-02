@@ -1,9 +1,9 @@
-// Command unigo reads lines from a file (or standard input) and writes each
-// distinct line exactly once, in order of first appearance.
+// Command unigo-set reads lines from a file (or standard input) and writes
+// each distinct line exactly once, in order of first appearance.
 //
 // Unlike the classic uniq, which collapses only adjacent runs of equal lines,
-// unigo remembers every line it has seen. That is what a set is for: the whole
-// deduplication rule is the single call to [set.Set.Insert] below.
+// unigo-set remembers every line it has seen. That is what a set is for: the
+// whole deduplication rule is the single call to [set.Set.Insert] below.
 package main
 
 import (
@@ -29,32 +29,37 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	case 1:
 		f, err := os.Open(args[0])
 		if err != nil {
-			fmt.Fprintf(stderr, "unigo: %v\n", err)
+			fmt.Fprintf(stderr, "unigo-set: %v\n", err)
 			return 1
 		}
 		defer f.Close()
 		input = f
 	default:
-		fmt.Fprintln(stderr, "usage: unigo [file.txt]")
+		fmt.Fprintln(stderr, "usage: unigo-set [file.txt]")
 		return 1
 	}
 
-	out := bufio.NewWriter(stdout)
+	if err := writeUnique(input, stdout); err != nil {
+		fmt.Fprintf(stderr, "unigo-set: %v\n", err)
+		return 1
+	}
+	return 0
+}
+
+// writeUnique copies input to output, keeping only the first occurrence of
+// each line. It is the whole program; everything else is plumbing.
+func writeUnique(input io.Reader, output io.Writer) error {
+	buf := bufio.NewWriter(output)
 
 	seen := make(set.Set[string])
 	lines := bufio.NewScanner(input)
 	for lines.Scan() {
 		line := lines.Text()
 		if seen.Insert(line) { // Insert reports whether the set changed
-			fmt.Fprintln(out, line)
+			fmt.Fprintln(buf, line)
 		}
 	}
 
-	// cmp.Or evaluates both arguments, so the buffer is always flushed;
-	// a read error wins over a write error when both happen.
-	if err := cmp.Or(lines.Err(), out.Flush()); err != nil {
-		fmt.Fprintf(stderr, "unigo: %v\n", err)
-		return 1
-	}
-	return 0
+	// Flush always; report read error if it happens
+	return cmp.Or(lines.Err(), buf.Flush())
 }

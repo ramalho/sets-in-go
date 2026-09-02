@@ -15,18 +15,29 @@ cat unigo/unigo-set/testdata/input.txt | go run ./unigo/unigo-set
 
 ## The whole program
 
-Stripped of I/O, `unigo-set` is this:
+Argument handling lives in `run`; the whole of `unigo-set` is this one
+function:
 
 ```go
-seen := make(set.Set[string])
-lines := bufio.NewScanner(input)
-for lines.Scan() {
-	line := lines.Text()
-	if seen.Insert(line) { // Insert reports whether the set changed
-		fmt.Fprintln(out, line)
+func writeUnique(input io.Reader, output io.Writer) error {
+	buf := bufio.NewWriter(output)
+
+	seen := make(set.Set[string])
+	lines := bufio.NewScanner(input)
+	for lines.Scan() {
+		line := lines.Text()
+		if seen.Insert(line) { // Insert reports whether the set changed
+			fmt.Fprintln(buf, line)
+		}
 	}
+
+	// Flush always; report read error if it happens
+	return cmp.Or(lines.Err(), buf.Flush())
 }
 ```
+
+Every variant has a `writeUnique` with that exact signature, and it is the
+only place they differ.
 
 `Insert` adding the element *and* reporting whether the set changed is what
 collapses "look it up, then store it" into one expression. It comes from the
@@ -37,7 +48,7 @@ local copy in [`vendored/set`](../../vendored/set). With today's
 ```go
 if _, dup := seen[line]; !dup {
 	seen[line] = struct{}{}
-	fmt.Fprintln(out, line)
+	fmt.Fprintln(buf, line)
 }
 ```
 
