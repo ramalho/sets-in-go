@@ -75,7 +75,7 @@ both operands to one type `M` (`Equal`, `Intersects`, and the other three
 
 ## What generic methods cost
 
-Three limits, all verified against `go1.27rc2`:
+Three limits, all verified against `go1.27.0`:
 
 1. **Interfaces cannot declare them** — `interface method must have no type
    parameters`. Every generic method here is invisible to interface
@@ -92,14 +92,15 @@ Three limits, all verified against `go1.27rc2`:
 
 ## Requirements
 
-Go 1.27. The `toolchain go1.27rc2` line in `go.mod` pins the release candidate
-until 1.27.0 ships; without it an older `go` tries to download a `go1.27.0`
-that does not exist yet.
+Go 1.27. The `go 1.27` line in `go.mod` is enough: with the default
+`GOTOOLCHAIN=auto`, an older `go` downloads and switches to a 1.27 toolchain on
+its own.
 
 **Your `gofmt` and `gopls` must also be 1.27+.** Go 1.26's parser rejects
 generic methods outright (`method must have no type parameters`), so an editor
 running an older toolchain will red-underline the whole file and `gofmt -l`
-will report false positives. Use `$(go1.27rc2 env GOROOT)/bin/gofmt`.
+will report false positives. Use `$(go env GOROOT)/bin/gofmt`, which resolves
+to the switched-to toolchain rather than whatever `go` binary is first in PATH.
 
 ```sh
 cd setgm

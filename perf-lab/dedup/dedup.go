@@ -1,17 +1,17 @@
 // Package dedup holds the deduplication rule from the unigo commands, written
-// four ways, so they can be compared side by side and benchmarked against each
+// five ways, so they can be compared side by side and benchmarked against each
 // other.
 //
 // Each function returns the distinct elements of lines, in order of first
 // appearance — the same job the unigo commands do, with the I/O removed:
 //
-//   - [MapStruct] is ../../unigo-map:  map[string]struct{}, lookup then store.
-//   - [MapBool]   is the other legacy idiom: map[string]bool.
-//   - [MapLen]    is ../../unigo-map1: store, then check whether len changed.
-//   - [Mapset]    is ../../unigo-mapset: a plain map, one call to mapset.Insert.
-//   - [Set]       is ../../unigo-set the proposed container/set type.
+//   - [MapStruct] is ../../unigo/unigo-map: map[string]struct{}, lookup then store.
+//   - [MapBool]   is ../../unigo/unigo-mapbool: the other legacy idiom, map[string]bool.
+//   - [MapLen]    is ../../unigo/unigo-maplen: store, then check whether len changed.
+//   - [Mapset]    is ../../unigo/unigo-mapset: a plain map, one call to mapset.Insert.
+//   - [Set]       is ../../unigo/unigo-set: the proposed container/set type.
 //
-// The four differ only in how they ask "is this line new?", and they allocate
+// The five differ only in how they ask "is this line new?", and they allocate
 // exactly the same: set.Set[E] is defined as map[E]struct{}, so no wrapper
 // type is involved anywhere.
 //

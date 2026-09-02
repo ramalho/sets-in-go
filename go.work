@@ -1,18 +1,15 @@
 go 1.27
 
-// ./setgm uses Go 1.27 generic methods. Pin the release candidate until
-// 1.27.0 ships; the go command finds it as the go1.27rc2 binary in PATH.
-toolchain go1.27rc2
-
 use (
 	./examples
 	./genset
 	./perf-lab/dedup
 	./setgm
 	./tools
-	./unigo
-	./unigo-map
-	./unigo-map1
-	./unigo-mapset
+	./unigo/unigo-map
+	./unigo/unigo-mapbool
+	./unigo/unigo-maplen
+	./unigo/unigo-mapset
+	./unigo/unigo-set
 	./vendored
 )

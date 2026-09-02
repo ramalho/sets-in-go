@@ -1,14 +1,12 @@
-// Command unigo-map1 reads lines from a file (or standard input) and writes
+// Command unigo-mapbool reads lines from a file (or standard input) and writes
 // each distinct line exactly once, in order of first appearance.
 //
-// It is line-for-line the same program as ../unigo-map, except for the
-// deduplication rule. Instead of looking the line up and then storing it, this
-// version stores it unconditionally and asks whether the map grew: a new line
-// makes len increase, a duplicate leaves it alone.
+// It is line-for-line the same program as ../unigo-map except that the set of
+// lines already seen is a map[string]bool rather than a map[string]struct{}.
+// A bool's zero value is false, so a missing key already reads as "not seen"
+// without a comma-ok lookup.
 //
-// That is exactly what mapset.Insert does internally (see ../unigo-mapset),
-// written out by hand — so this version needs nothing outside the standard
-// library, and shows what the helper is buying: a name.
+// This module depends on nothing outside the standard library.
 package main
 
 import (
@@ -32,25 +30,24 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	case 1:
 		f, err := os.Open(args[0])
 		if err != nil {
-			fmt.Fprintf(stderr, "unigo-map1: %v\n", err)
+			fmt.Fprintf(stderr, "unigo-mapbool: %v\n", err)
 			return 1
 		}
 		defer f.Close()
 		input = f
 	default:
-		fmt.Fprintln(stderr, "usage: unigo-map1 [file.txt]")
+		fmt.Fprintln(stderr, "usage: unigo-mapbool [file.txt]")
 		return 1
 	}
 
 	out := bufio.NewWriter(stdout)
 
-	seen := make(map[string]struct{})
+	seen := make(map[string]bool)
 	lines := bufio.NewScanner(input)
 	for lines.Scan() {
 		line := lines.Text()
-		before := len(seen)
-		seen[line] = struct{}{}  // just put it there...
-		if len(seen) != before { // ...and see whether that added anything
+		if !seen[line] { // zero value false means "not seen"...
+			seen[line] = true // ...then store it
 			fmt.Fprintln(out, line)
 		}
 	}
@@ -58,7 +55,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	// cmp.Or evaluates both arguments, so the buffer is always flushed;
 	// a read error wins over a write error when both happen.
 	if err := cmp.Or(lines.Err(), out.Flush()); err != nil {
-		fmt.Fprintf(stderr, "unigo-map1: %v\n", err)
+		fmt.Fprintf(stderr, "unigo-mapbool: %v\n", err)
 		return 1
 	}
 	return 0

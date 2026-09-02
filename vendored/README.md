@@ -45,7 +45,7 @@ directory (`src/internal/fmtsort/`).
 Go **1.27** or later: `hash.Set` is parameterised by
 [`maphash.Hasher[T]`](https://pkg.go.dev/hash/maphash#Hasher), which is new in
 1.27 ([#70471](https://github.com/golang/go/issues/70471)). Everything here was
-built and tested with `go1.27rc2`.
+built and tested with `go1.27.0`.
 
 ## Re-extracting
 
@@ -55,7 +55,7 @@ SET_PS=current HASH_PS=current ./refresh.sh   # latest patchsets
 ```
 
 `SET_PS`, `MAPSET_PS`, `MAP_PS` and `HASH_PS` each select a patchset; `GO`
-selects the toolchain (default `go1.27rc2`). The script downloads each file
+selects the toolchain (default `go`). The script downloads each file
 from Gerrit's REST API, rewrites imports, and then builds and tests the result.
 It overwrites `set/`, `mapset/`, `hash/`, `container/`, `internal/fmtsort/` and
 `PROVENANCE.txt`; it does not touch `internal/maps/` or `internal/iter/`.

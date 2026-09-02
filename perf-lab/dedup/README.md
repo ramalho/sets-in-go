@@ -1,15 +1,15 @@
-# Deduplication: four spellings, measured
+# Deduplication: five spellings, measured
 
 [`dedup.go`](dedup.go) contains the deduplication rule from the `unigo`
-commands, written four ways with the I/O stripped out:
+commands, written five ways with the I/O stripped out:
 
 | function    | set type              | the question                        | steps | from |
 |-------------|-----------------------|-------------------------------------|-------|------|
-| `MapStruct` | `map[string]struct{}` | `if _, dup := seen[line]; !dup`     | two | [`../../unigo-map`](../../unigo-map) |
-| `MapBool`   | `map[string]bool`     | `if !seen[line]`                    | two | the other legacy idiom |
-| `MapLen`    | `map[string]struct{}` | store, then `if len(seen) != before` | one | [`../../unigo-map1`](../../unigo-map1) |
-| `Mapset`    | `map[string]struct{}` | `if mapset.Insert(seen, line)`      | one | [`../../unigo-mapset`](../../unigo-mapset) |
-| `Set`       | `set.Set[string]`     | `if seen.Insert(line)`              | one | [`../../unigo-set](../../unigo-set |
+| `MapStruct` | `map[string]struct{}` | `if _, dup := seen[line]; !dup`     | two | [`../../unigo/unigo-map`](../../unigo/unigo-map) |
+| `MapBool`   | `map[string]bool`     | `if !seen[line]`                    | two | [`../../unigo/unigo-mapbool`](../../unigo/unigo-mapbool) |
+| `MapLen`    | `map[string]struct{}` | store, then `if len(seen) != before` | one | [`../../unigo/unigo-maplen`](../../unigo/unigo-maplen) |
+| `Mapset`    | `map[string]struct{}` | `if mapset.Insert(seen, line)`      | one | [`../../unigo/unigo-mapset`](../../unigo/unigo-mapset) |
+| `Set`       | `set.Set[string]`     | `if seen.Insert(line)`              | one | [`../../unigo/unigo-set`](../../unigo/unigo-set) |
 
 The last three are the same strategy at three levels of abstraction: written
 out by hand, behind a generic function, and behind a method. `MapLen` is the
@@ -124,7 +124,7 @@ reads best.
   95% confidence interval.
 * Benchmarking the dedup rule alone exaggerates its share: the real `unigo`
   commands also scan and write, so these differences shrink against actual I/O.
-* The four implementations are re-typed here rather than imported, because each
+* The five implementations are re-typed here rather than imported, because each
   command is its own `package main`. [`TestImplementationsAgree`](dedup_test.go)
-  checks all four still produce identical output; it does not check that they
+  checks all five still produce identical output; it does not check that they
   still match the code in the command directories.
